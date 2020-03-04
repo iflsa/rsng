@@ -1,0 +1,183 @@
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="switch.css">
+    <style>
+        body {
+            font-family: Lato;
+        }
+        
+        #content-1 {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            padding: 24px;
+        }
+        
+        .box {
+            max-width: 350px;
+            margin: 0 auto;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .inputs {
+            display: flex;
+            flex: 1;
+            width: 90%;
+            margin-top: 16px;
+        }
+        
+        #counter {
+            font-size: 72px;
+        }
+        
+        input {
+            min-width: 0;
+            flex: 1;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            height: 24px;
+            outline: none;
+            padding: 0 8px;
+            text-align: center;
+            font-family: Lato;
+            margin-right: 32px;
+        }
+        
+        .icon-button {
+            width: 20px;
+            height: 20px;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-position: center;
+            opacity: 0.54;
+            cursor: pointer;
+        }
+        
+        .icon-button:hover {
+            opacity: 1;
+        }
+        
+        #refresh {
+            background-image: url(img/refresh.svg);
+        }
+        
+        #settings {
+            background-image: url(img/settings.svg);
+        }
+        
+        #close {
+            background-image: url(img/close.svg);
+        }
+        
+        input:last-child {
+            margin-right: 0px;
+        }
+        
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            opacity: 1;
+        }
+        
+        .btn {
+            background-color: dodgerblue;
+            text-align: center;
+            color: white;
+            padding: 12px 0px;
+            border-radius: 30px;
+            margin-top: 16px;
+            width: 100%;
+            cursor: pointer;
+        }
+        
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        #content-2 {
+            position: absolute;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            pointer-events: none;
+            padding: 24px;
+            padding-top: 16px;
+            transition: 0.2s opacity, 0.2s transform;
+            transform: scale(1.15);
+            opacity: 0;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .visible {
+            opacity: 1 !important;
+            transform: scale(1) !important;
+            pointer-events: inherit !important;
+            backdrop-filter: blur(5px);
+        }
+        
+        .title {
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div id="content-1">
+            <div class="header">
+                <div id="refresh" class="icon-button">
+
+                </div>
+                <div id="settings" class="icon-button">
+
+                </div>
+            </div>
+            <div id="counter">0</div>
+            <div class="inputs">
+                <input placeholder="Min" type="number">
+
+                <input placeholder="Max" type="number">
+            </div>
+            <div class="btn" id="generate">Generuj</div>
+        </div>
+        <div id="content-2">
+            <div class="header" style="margin-bottom: 8px">
+                <div class="title">Settings</div>
+                <div id="close" class="icon-button">
+
+                </div>
+            </div>
+
+            <div class="switch">
+                <input type="checkbox" id="switch1" class="switch__input">
+                <label for="switch1" class="switch__label">No repeat</label>
+            </div>
+
+            <div class="switch">
+                <input type="checkbox" id="switch2" class="switch__input">
+                <label for="switch2" class="switch__label">No animations</label>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    document.getElementById("settings").onclick = () => {
+        document.getElementById("content-2").classList.add('visible');
+    }
+
+    document.getElementById("close").onclick = () => {
+        document.getElementById("content-2").classList.remove('visible');
+    }
+</script>
+
+
+</html>
