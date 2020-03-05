@@ -1,8 +1,9 @@
 let min = 1;
 let max = 30;
 let excluded_nums = [];
-let no_reps = false;
+let no_reps = true;
 let time = 5000;
+let secret_mode = true;
 $(document).ready(function () {
     $("#slots_a .wrapper").append("<div class='slot'>" + generateNumber(1, 10) + "</div>"); //Not to add whole 25 numbers
 });
@@ -15,6 +16,11 @@ document.getElementById("refresh").onclick = () => {
 document.getElementById("switch1").onclick = () => {
     no_reps = !no_reps;
 }
+//Secret
+document.getElementById("secret").onclick = () => {
+    secret_mode = !secret_mode;
+}
+
 //No animation
 document.getElementById("switch2").onclick = () => {
     if (time === 5000) {
@@ -77,7 +83,12 @@ function generateNumber(min, max) {
     let nums = [];
     for (let i = min; i < max + 1; i++) {
         if (!excluded_nums.includes(i)) {
-            nums.push(i);
+            if (secret_mode && i != 21 && i != 22 && i != 23) {
+                nums.push(i);
+            }
+            else if (!secret_mode) {
+                nums.push(i);
+            }
         }
     }
     if (nums.length === 0) {
