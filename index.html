@@ -3,159 +3,9 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="switch.css">
-    <style>
-        body {
-            font-family: Lato;
-        }
-        
-        #content-1 {
-            display: flex;
-            flex-flow: column;
-            align-items: center;
-            padding: 24px;
-        }
-        
-        .box {
-            max-width: 350px;
-            margin: 0 auto;
-            border: 1px solid rgba(0, 0, 0, 0.12);
-            border-radius: 6px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .inputs {
-            display: flex;
-            flex: 1;
-            width: 90%;
-            margin-top: 16px;
-        }
-        
-        #counter {
-            font-size: 72px;
-        }
-        
-        input {
-            min-width: 0;
-            flex: 1;
-            border-radius: 30px;
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            height: 24px;
-            outline: none;
-            padding: 0 8px;
-            text-align: center;
-            font-family: Lato;
-            margin-right: 32px;
-        }
-        
-        .icon-button {
-            width: 20px;
-            height: 20px;
-            background-repeat: no-repeat;
-            background-size: 100%;
-            background-position: center;
-            opacity: 0.54;
-            cursor: pointer;
-        }
-        
-        .icon-button:hover {
-            opacity: 1;
-        }
-        
-        #refresh {
-            background-image: url(img/refresh.svg);
-        }
-        
-        #settings {
-            background-image: url(img/settings.svg);
-        }
-        
-        #close {
-            background-image: url(img/close.svg);
-        }
-        
-        input:last-child {
-            margin-right: 0px;
-        }
-        
-        input[type=number]::-webkit-inner-spin-button,
-        input[type=number]::-webkit-outer-spin-button {
-            opacity: 1;
-        }
-        
-        .btn {
-            background-color: dodgerblue;
-            text-align: center;
-            color: white;
-            padding: 12px 0px;
-            border-radius: 30px;
-            margin-top: 16px;
-            width: 100%;
-            cursor: pointer;
-        }
-        
-        .header {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        #content-2 {
-            position: absolute;
-            bottom: 0;
-            top: 0;
-            left: 0;
-            right: 0;
-            pointer-events: none;
-            padding: 24px;
-            padding-top: 16px;
-            transition: 0.2s opacity, 0.2s transform;
-            transform: scale(1.15);
-            opacity: 0;
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .visible {
-            opacity: 1 !important;
-            transform: scale(1) !important;
-            pointer-events: inherit !important;
-            backdrop-filter: blur(5px);
-        }
-        
-        .title {
-            font-size: 24px;
-        }
-        
-        #slots_container {
-            background-color: white;
-            padding: 0px;
-            margin: 0px;
-            width: 100px;
-        }
-        
-        .slots {
-            font-size: 65px;
-            font-family: arial, helvetica, sans-serif;
-            overflow: hidden;
-            width: 100px;
-            height: 100px;
-            float: left;
-        }
-        
-        .slots .slot {
-            width: 100px;
-            height: 100px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .button {
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
 
 <body>
@@ -181,7 +31,7 @@
 
                 <input placeholder="Max" id="max" type="number">
             </div>
-            <div class="btn" id="generate">Generuj</div>
+            <div class="btn" id="generate" data-usable="true">Generuj</div>
         </div>
         <div id="content-2">
             <div class="header" style="margin-bottom: 8px">
@@ -214,74 +64,6 @@
     }
 </script>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
-<script>
-    let min = 1;
-    let max = 30;
-    let nums = [];
-    const reps = false;
-    $(document).ready(function() {
-        addSlots($("#slots_a .wrapper"));
-    });
-
-    document.getElementById("generate").onclick = () => {
-        min = parseInt(document.getElementById("min").value);
-        max = parseInt(document.getElementById("max").value);
-
-        min = isNaN(min) ? 1 : min;
-        max = isNaN(max) ? 10 : max;
-
-        $("#slots_a .wrapper").empty();
-
-        addSlots($("#slots_a .wrapper"));
-        moveSlots($("#slots_a .wrapper"));
-    }
-
-    function addSlots(jqo) {
-        for (var i = 0; i < 30; i++) {
-            var ctr = generateNumber(reps, min, max, nums);
-            jqo.append("<div class='slot'>" + ctr + "</div>");
-        }
-    }
-
-    function moveSlots(jqo) {
-        var time = 5000;
-        time += Math.round(Math.random() * 500);
-        jqo.stop(true, true);
-        var marginTop = parseInt(jqo.css("margin-top"), 10)
-        marginTop -= (20 * 100)
-        jqo.animate({
-            "margin-top": marginTop + "px"
-        }, {
-            'duration': time,
-            'easing': "swing"
-        });
-    }
-
-    function generateNumber(no_reps, min, max, nums) {
-        if (no_reps) {
-            let temp = parseInt((Math.random() * (max - min + 1)), 10) + min;
-            if (!nums.includes(temp)) {
-                nums.push(temp);
-                return parseInt(temp);
-            } else if (nums.length == max - min + 1) {
-                return null;
-            } else {
-                while (nums.includes(temp)) {
-                    if (temp != max)
-                        temp++;
-                    else
-                        temp = min;
-                }
-                nums.push(temp);
-                return parseInt(temp);
-            }
-        }
-        return parseInt((Math.random() * (max - min + 1)), 10) + min;
-    }
-</script>
-
+<script src="script.js"></script>
 
 </html>
