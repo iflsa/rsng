@@ -1,38 +1,62 @@
 let min = 1;
 let max = 30;
-let nums = [];
-const reps = false;
+let excluded_nums = [];
+let no_reps = false;
+let time = 5000;
 $(document).ready(function () {
-    $("#slots_a .wrapper").append("<div class='slot'>" + generateNumber(false, 1, 10, nums) + "</div>"); //Not to add whole 25 numbers
+    $("#slots_a .wrapper").append("<div class='slot'>" + generateNumber(1, 10) + "</div>"); //Not to add whole 25 numbers
 });
+
+document.getElementById("refresh").onclick = () => {
+    excluded_nums = [];
+}
+
+//No repeat
+document.getElementById("switch1").onclick = () => {
+    no_reps = !no_reps;
+}
+//No animation
+document.getElementById("switch2").onclick = () => {
+    if (time === 5000) {
+        time = 0;
+    }
+    else {
+        time = 5000;
+    }
+}
 
 document.getElementById("generate").onclick = () => {
     if (document.getElementById("generate").getAttribute("data-usable") == "true") {
-        min = parseInt(document.getElementById("min").value);
-        max = parseInt(document.getElementById("max").value);
+        let first_num = parseInt(document.getElementById("min").value);
+        let second_num = parseInt(document.getElementById("max").value)
+        min = Math.min(first_num, second_num);
+        max = Math.max(first_num, second_num);
 
         min = isNaN(min) ? 1 : min;
         max = isNaN(max) ? 10 : max;
 
+
         addSlots($("#slots_a .wrapper"));
         moveSlots($("#slots_a .wrapper"));
-        // $("#slots_a .wrapper").empty();
     }
 }
 
 function addSlots(jqo) {
     for (var i = 0; i < 20; i++) { // 20 is a maximum visible number with time 5500
-        var ctr = generateNumber(reps, min, max, nums);
+        var ctr = generateNumber(min, max);
         jqo.append("<div class='slot'>" + ctr + "</div>");
+        if (no_reps) {
+            if (i === 19) {
+                excluded_nums.push(ctr);
+            }
+        }
     }
 }
 
 function moveSlots(jqo) {
-    var time = 5000;
-    // time += Math.round(Math.random() * 500);
     jqo.stop(true, true);
-    var marginTop = parseInt(jqo.css("margin-top"), 10)
-    marginTop -= (20 * 100)
+    var marginTop = parseInt(jqo.css("margin-top"), 10);
+    marginTop -= (20 * 100);
     jqo.animate({
         "margin-top": marginTop + "px"
     }, {
@@ -48,26 +72,17 @@ function moveSlots(jqo) {
         },
     });
 }
-function generateNumber(no_reps, min, max, nums) {
-    if (no_reps) {
-        let temp = parseInt((Math.random() * (max - min + 1)), 10) + min;
-        if (!nums.includes(temp)) {
-            nums.push(temp);
-            return parseInt(temp);
-        }
-        else if (nums.length == max - min + 1) {
-            return null;
-        }
-        else {
-            while (nums.includes(temp)) {
-                if (temp != max)
-                    temp++;
-                else
-                    temp = min;
-            }
-            nums.push(temp);
-            return parseInt(temp);
+
+function generateNumber(min, max) {
+    let nums = [];
+    for (let i = min; i < max + 1; i++) {
+        if (!excluded_nums.includes(i)) {
+            nums.push(i);
         }
     }
-    return parseInt((Math.random() * (max - min + 1)), 10) + min;
+    if (nums.length === 0) {
+        nums.push(0);
+    }
+    let temp = nums[Math.floor(Math.random() * nums.length)];
+    return temp;
 }
