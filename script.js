@@ -92,7 +92,7 @@ function generateNumber(min, max) {
         }
     }
     if (nums.length === 0) {
-        nums.push(0);
+        nums.push("∅");
     }
     let temp = nums[Math.floor(Math.random() * nums.length)];
     return temp;
