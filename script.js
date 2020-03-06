@@ -16,10 +16,6 @@ document.getElementById("refresh").onclick = () => {
 document.getElementById("switch1").onclick = () => {
     no_reps = !no_reps;
 }
-//Secret
-document.getElementById("secret").onclick = () => {
-    secret_mode = !secret_mode;
-}
 
 //No animation
 document.getElementById("switch2").onclick = () => {
@@ -83,12 +79,7 @@ function generateNumber(min, max) {
     let nums = [];
     for (let i = min; i < max + 1; i++) {
         if (!excluded_nums.includes(i)) {
-            if (secret_mode && i != 21 && i != 22 && i != 23) {
-                nums.push(i);
-            }
-            else if (!secret_mode) {
-                nums.push(i);
-            }
+            nums.push(i);
         }
     }
     if (nums.length === 0) {

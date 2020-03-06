@@ -18,6 +18,12 @@ body {
     overflow: hidden;
 }
 
+a {
+    position: absolute;
+    bottom: 5%;
+    font-size: 70%;
+}
+
 .inputs {
     display: flex;
     flex: 1;
