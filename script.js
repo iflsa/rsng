@@ -19,12 +19,7 @@ document.getElementById("switch1").onclick = () => {
 
 //No animation
 document.getElementById("switch2").onclick = () => {
-    if (time === 5000) {
-        time = 0;
-    }
-    else {
-        time = 5000;
-    }
+    time = time === 5000 ? 0 : 5000;
 }
 
 document.getElementById("generate").onclick = () => {
@@ -83,7 +78,7 @@ function generateNumber(min, max) {
         }
     }
     if (nums.length === 0) {
-        nums.push("∅");
+        nums.push("Nothing");
     }
     let temp = nums[Math.floor(Math.random() * nums.length)];
     return temp;

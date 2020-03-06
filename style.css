@@ -131,20 +131,20 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: white;
     padding: 0px;
     margin: 0px;
-    width: 100px;
+    width: 250px;
 }
 
 .slots {
     font-size: 65px;
     font-family: arial, helvetica, sans-serif;
     overflow: hidden;
-    width: 100px;
+    width: 250px;
     height: 100px;
     float: left;
 }
 
 .slots .slot {
-    width: 100px;
+    width: 250px;
     height: 100px;
     text-align: center;
     display: flex;
